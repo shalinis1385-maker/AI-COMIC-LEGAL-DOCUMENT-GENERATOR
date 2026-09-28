@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Create a Comic — ComicCraft{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <span class="eyebrow">GENERATIVE AI PROJECT</span>
+        <h1>Turn an idea into a comic.</h1>
+        <p>Describe your story, character, world, mood, and art style. ComicCraft builds a five-panel comic and a downloadable PDF.</p>
+    </div>
+</section>
+
+{% if error %}
+<div class="alert">{{ error }}</div>
+{% endif %}
+
+<form class="card form-card" action="/generate" method="post" onsubmit="showLoading()">
+    <label>
+        Story Prompt
+        <textarea name="story_prompt" required maxlength="2000" placeholder="A brave fox exploring an enchanted forest..."></textarea>
+    </label>
+
+    <div class="grid two">
+        <label>
+            Main Character Name
+            <input name="character_name" required maxlength="80" placeholder="Lumi">
+        </label>
+        <label>
+            Setting
+            <input name="setting" required maxlength="120" placeholder="Enchanted forest">
+        </label>
+    </div>
+
+    <div class="grid two">
+        <label>
+            Story Tone
+            <select name="tone">
+                <option>light-hearted</option>
+                <option>dramatic</option>
+                <option>poetic</option>
+                <option>funny</option>
+                <option>mysterious</option>
+            </select>
+        </label>
+        <label>
+            Art Style
+            <select name="art_style">
+                <option>comic book</option>
+                <option>anime</option>
+                <option>pixel art</option>
+                <option>realistic</option>
+                <option>watercolor illustration</option>
+            </select>
+        </label>
+    </div>
+
+    <button class="button primary" type="submit" id="generateButton">Create My Comic</button>
+    <p class="loading" id="loading">Generating your comic. This can take a little while...</p>
+</form>
+
+<section class="info-grid">
+    <article class="card"><strong>1. Outline</strong><span>Gemini plans the five panels.</span></article>
+    <article class="card"><strong>2. Story</strong><span>Gemini writes narration and dialogue.</span></article>
+    <article class="card"><strong>3. Illustrate</strong><span>Hugging Face generates panel art.</span></article>
+    <article class="card"><strong>4. Export</strong><span>FPDF2 creates the downloadable PDF.</span></article>
+</section>
+{% endblock %}

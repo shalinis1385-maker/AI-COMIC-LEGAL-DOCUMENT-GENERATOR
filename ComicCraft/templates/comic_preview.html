@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Comic Preview — ComicCraft{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">YOUR GENERATED COMIC</span>
+    <h1>Comic Preview</h1>
+    <p>Review each panel, then download the complete story as a PDF.</p>
+    {% if mode == "demo" %}
+    <div class="demo-badge">Demo mode — configure API keys in .env for real AI generation.</div>
+    {% endif %}
+</section>
+
+<div class="actions">
+    <a class="button primary" href="{{ pdf_url }}" download>Download Your Comic as PDF</a>
+    <a class="button secondary" href="/">Create Another Comic</a>
+</div>
+
+<section class="comic-list">
+{% for panel in layout %}
+<article class="comic-panel card">
+    <div class="panel-number">PANEL {{ panel.panel_number }}</div>
+    <h2>{{ panel.title }}</h2>
+    <img src="{{ panel.image_url }}" alt="Illustration for {{ panel.title }}">
+    <p class="scene"><em>{{ panel.scene_description }}</em></p>
+    <div class="text-block">
+        <h3>Caption</h3>
+        <p>{{ panel.caption }}</p>
+        <h3>Narration</h3>
+        <p>{{ panel.narration }}</p>
+        <h3>Dialogue</h3>
+        <p class="dialogue">{{ panel.dialogue }}</p>
+    </div>
+    <details>
+        <summary>Image prompt reference</summary>
+        <p>{{ panel.image_prompt }}</p>
+    </details>
+</article>
+{% endfor %}
+</section>
+{% endblock %}
